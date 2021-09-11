@@ -4,7 +4,7 @@
     <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="Hooks\RegistrationHooks.cs">
+    <Compile Update="Hooks\Account\Register\RegistrationHooks.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Steps\Account\Register\RegistrationStepDefinition.cs">

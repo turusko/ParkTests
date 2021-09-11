@@ -1,61 +1,80 @@
-﻿using System;
+﻿using FluentAssertions;
+using ParkTests.PageModels.Account.Register;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TechTalk.SpecFlow;
+
 
 namespace ParkTests.Steps.Account.Register
 {
     [Binding]
     public sealed class RegistrationStepDefinition
     {
-        // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
 
-        private readonly ScenarioContext _scenarioContext;
 
-        public RegistrationStepDefinition(ScenarioContext scenarioContext)
+        private FeatureContext _featurecontext;
+        private RegisterPage _registerPage;
+
+        public RegistrationStepDefinition(FeatureContext featurecontext)
         {
-            _scenarioContext = scenarioContext;
+            _featurecontext = featurecontext;
+            _featurecontext.TryGetValue("registerPage", out _registerPage);
         }
 
-        [Given("the first number is (.*)")]
-        public void GivenTheFirstNumberIs(int number)
+        [When(@"the user provides a password ""(.*)""")]
+        public void WhenTheUserProcidesAPassword(string password)
         {
-            //TODO: implement arrange (precondition) logic
-            // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-            // To use the multiline text or the table argument of the scenario,
-            // additional string/Table parameters can be defined on the step definition
-            // method. 
-
-            _scenarioContext.Pending();
+            _registerPage.SetPassword(password);
         }
 
-        [Given("the second number is (.*)")]
-        public void GivenTheSecondNumberIs(int number)
+        [Then(@"error appears with the text ""(.*)""")]
+        [When(@"error appears with the text ""(.*)""")]
+        [Given(@"error appears with the text ""(.*)""")]
+        public void ThenErrorAppearsWithTheText(string errorMessage)
         {
-            //TODO: implement arrange (precondition) logic
-            // For storing and retrieving scenario-specific data see https://go.specflow.org/doc-sharingdata 
-            // To use the multiline text or the table argument of the scenario,
-            // additional string/Table parameters can be defined on the step definition
-            // method. 
-
-            _scenarioContext.Pending();
+            _registerPage.IsErrorMessageVisibile(errorMessage).Should().BeTrue();
         }
 
-        [When("the two numbers are added")]
-        public void WhenTheTwoNumbersAreAdded()
+        [Given(@"User select next")]
+        [When(@"user select Next")]
+        public void WhenUserSelectNext()
         {
-            //TODO: implement act (action) logic
-
-            _scenarioContext.Pending();
+            _registerPage.SelectNext();
         }
 
-        [Then("the result should be (.*)")]
-        public void ThenTheResultShouldBe(int result)
+        [When(@"the user provides mobile number ""(.*)""")]
+        public void WhenTheUserProvidesMobileNumber(string mobileNumber)
         {
-            //TODO: implement assert (verification) logic
-
-            _scenarioContext.Pending();
+            _registerPage.SetMovbileNumber(mobileNumber);
         }
+
+        [When(@"the user provides email address ""(.*)""")]
+        public void WhenTheUserProvidesEmailAddress(string emailAddress)
+        {
+            _registerPage.SetEmailAddress(emailAddress);
+        }
+
+        [Then(@"error with the text ""(.*)"" disappears")]
+        public void ThenErrorWithTheTextDisappears(string errorMessage)
+        {
+            _registerPage.IsErrorMessageVisibile(errorMessage).Should().BeFalse();
+        }
+
+        [Then(@"password requirement ""(.*)"" is not ticked")]
+        public void ThenPasswordRequirementIsNotTicked(string passwordMust)
+        {
+            _registerPage.IsPasswordMustTicked(passwordMust).Should().BeFalse();
+        }
+
+        [Then(@"password requirement ""(.*)"" is ticked")]
+        public void ThenPasswordRequirementIsTicked(string passwordMust)
+        {
+            _registerPage.IsPasswordMustTicked(passwordMust).Should().BeTrue();
+        }
+
+
+
     }
 }

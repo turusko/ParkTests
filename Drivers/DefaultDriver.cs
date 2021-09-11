@@ -41,7 +41,7 @@ namespace ParkTests.Drivers
 
         }
 
-        public LandingPage EdgeDriver()
+        public LandingPage NavigateToLandingPage()
         {
 
             _driver.Navigate().GoToUrl($"http://{_testConfiguration.Username}:{_testConfiguration.Password}@{_testConfiguration.URL}");

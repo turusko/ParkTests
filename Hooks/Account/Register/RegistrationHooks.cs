@@ -19,7 +19,7 @@ namespace ParkTests.Hooks.Account.Register
         public static void BeforeFeature(FeatureContext featureContext)
         {
             var driver = new DefaultDriver();
-            var landingPage = driver.EdgeDriver();
+            var landingPage = driver.NavigateToLandingPage();
             var registerPage = landingPage.RegisterNewUser();
             featureContext.Add("registerPage", registerPage);
             featureContext.Add("driver", driver);
